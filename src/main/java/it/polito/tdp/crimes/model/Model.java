@@ -1,5 +1,6 @@
 package it.polito.tdp.crimes.model;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -92,6 +93,7 @@ public class Model {
 			}
 		}
 		
+		Collections.sort(result, new ComparatorOrdineDecrescente());
 		
 		return result;
 	}

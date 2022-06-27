@@ -84,6 +84,10 @@ public class EventsDao {
 					years.add(data.getYear());
 				}
 				
+				Timestamp ts=res.getTimestamp(0);
+				
+				ts.to		
+				
 			}
 			
 			conn.close();
@@ -163,6 +167,43 @@ public class EventsDao {
 			return null ;
 		}
 		
+	}
+
+	public String getDistrettoMinorCriminalita(int anno, int mese, int giorno) {
+		
+		String sql = "SELECT e.offense_category_id AS categoria, e.district_id AS id, e.reported_date "
+				+ "FROM `events` e \r\n"
+				+ "WHERE DAY(e.reported_date) = ? "
+				+ "AND MONTH(e.reported_date) = ? "
+				+ "AND YEAR(e.reported_date) = ?";
+		
+		try {
+			Connection conn = DBConnect.getConnection() ;
+
+			PreparedStatement st = conn.prepareStatement(sql) ;
+			
+			st.setInt(1, year);
+			
+			List<DistrettoCoordinate> result = new ArrayList<>() ;
+			
+			ResultSet res = st.executeQuery() ;
+			
+			while(res.next()) {
+				
+				result.add(new DistrettoCoordinate(res.getInt("id"),res.getDouble("lon"), res.getDouble("lat")));
+		
+			}
+			
+			conn.close();
+			return result ;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null ;
+		}
+		
+		return null;
 	}
 
 }

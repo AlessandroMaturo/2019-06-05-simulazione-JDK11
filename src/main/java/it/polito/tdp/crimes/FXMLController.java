@@ -5,6 +5,7 @@
 package it.polito.tdp.crimes;
 
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -31,10 +32,10 @@ public class FXMLController {
     private ComboBox<Integer> boxAnno; // Value injected by FXMLLoader
 
     @FXML // fx:id="boxMese"
-    private ComboBox<?> boxMese; // Value injected by FXMLLoader
+    private ComboBox<Integer> boxMese; // Value injected by FXMLLoader
 
     @FXML // fx:id="boxGiorno"
-    private ComboBox<?> boxGiorno; // Value injected by FXMLLoader
+    private ComboBox<Integer> boxGiorno; // Value injected by FXMLLoader
 
     @FXML // fx:id="btnCreaReteCittadina"
     private Button btnCreaReteCittadina; // Value injected by FXMLLoader
@@ -91,5 +92,20 @@ public class FXMLController {
     	this.model = model;
     	
     	boxAnno.getItems().addAll(model.getDistinctYear());
+    	
+    	List<Integer> mesi = new LinkedList<>();
+    	
+    	for(int i=1;i<=12;i++) {
+    		mesi.add(i);
+    	}
+    	
+    	List<Integer> giorni = new LinkedList<>();
+    	
+    	for(int i=1;i<=31;i++) {
+    		giorni.add(i);
+    	}
+    	
+    	boxGiorno.getItems().addAll(giorni);
+    	boxMese.getItems().addAll(mesi);
     }
 }
