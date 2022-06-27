@@ -5,8 +5,11 @@
 package it.polito.tdp.crimes;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
+import it.polito.tdp.crimes.model.DistrettoDistanza;
 import it.polito.tdp.crimes.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,7 +28,7 @@ public class FXMLController {
     private URL location;
 
     @FXML // fx:id="boxAnno"
-    private ComboBox<?> boxAnno; // Value injected by FXMLLoader
+    private ComboBox<Integer> boxAnno; // Value injected by FXMLLoader
 
     @FXML // fx:id="boxMese"
     private ComboBox<?> boxMese; // Value injected by FXMLLoader
@@ -48,6 +51,23 @@ public class FXMLController {
     @FXML
     void doCreaReteCittadina(ActionEvent event) {
 
+    	txtResult.clear();
+    	
+    	int year = boxAnno.getValue();
+    	
+    	model.creaGrafo(year);
+    	
+    	Set<Integer> vertici = model.getVertexes();
+    	
+    	for(Integer ii: vertici) {
+    		List<DistrettoDistanza> result=model.getAdiacenti(ii);
+    		txtResult.appendText("\nI vicini al distretto "+ii+" sono: \n");
+    		for(DistrettoDistanza di: result) {
+    			txtResult.appendText(di.getId()+" "+di.getDistanza()+"\n");
+    		}
+    	}
+    	
+    	
     }
 
     @FXML
@@ -69,5 +89,7 @@ public class FXMLController {
     
     public void setModel(Model model) {
     	this.model = model;
+    	
+    	boxAnno.getItems().addAll(model.getDistinctYear());
     }
 }
